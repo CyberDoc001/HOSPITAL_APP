@@ -1,0 +1,17 @@
+{% extends 'patients/base.html' %}
+{% block content %}
+<h2>Admin Portal</h2>
+<div class="admin-metrics">
+    <div class="metric">Patients: <strong>{{ patient_count }}</strong></div>
+    <div class="metric">Appointments: <strong>{{ appointment_count }}</strong></div>
+    <div class="metric">Doctors: <strong>{{ doctor_count }}</strong></div>
+</div>
+<h3>Recent Patients</h3>
+<ul>
+    {% for p in recent_patients %}
+        <li><a href="{% url 'patients:patient_detail' p.pk %}">{{ p.first_name }} {{ p.last_name }}</a></li>
+    {% empty %}
+        <li>No recent patients</li>
+    {% endfor %}
+</ul>
+{% endblock %}

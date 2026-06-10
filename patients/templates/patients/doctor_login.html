@@ -1,0 +1,27 @@
+{% extends 'patients/base.html' %}
+
+{% block content %}
+<div class="page-header">
+    <h3>Doctor Login</h3>
+    <p>Use your surname and email to access assigned patient records.</p>
+</div>
+<div class="panel" style="max-width: 640px; margin: 0 auto;">
+    <form method="post">
+        {% csrf_token %}
+        <div class="form-field">
+            <label for="id_surname">Surname</label>
+            {{ form.surname }}
+            {% if form.surname.errors %}<span class="form-error">{{ form.surname.errors.0 }}</span>{% endif %}
+        </div>
+        <div class="form-field">
+            <label for="id_email">Email</label>
+            {{ form.email }}
+            {% if form.email.errors %}<span class="form-error">{{ form.email.errors.0 }}</span>{% endif %}
+        </div>
+        <div class="form-actions" style="margin-top: 1rem;">
+            <button class="btn btn-primary" type="submit">Sign In</button>
+            <a class="btn btn-secondary" href="{% url 'login' %}">Use standard login</a>
+        </div>
+    </form>
+</div>
+{% endblock %}

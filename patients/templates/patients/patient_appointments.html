@@ -1,0 +1,18 @@
+{% extends 'patients/base.html' %}
+{% block content %}
+<h2>My Appointments</h2>
+<table class="table">
+    <tr><th>Date</th><th>Doctor</th><th>Status</th><th>Reason</th></tr>
+    {% for appt in appointments %}
+    <tr>
+        <td>{{ appt.scheduled_at|date:'M d, Y H:i' }}</td>
+        <td>{{ appt.doctor }}</td>
+        <td>{{ appt.status }}</td>
+        <td>{{ appt.reason }}</td>
+    </tr>
+    {% empty %}
+    <tr><td colspan="4">No appointments found.</td></tr>
+    {% endfor %}
+</table>
+<p><a class="btn btn-primary" href="{% url 'patients:patient_book_appointment' %}">Book New Appointment</a></p>
+{% endblock %}

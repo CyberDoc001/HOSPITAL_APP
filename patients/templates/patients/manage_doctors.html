@@ -1,0 +1,17 @@
+{% extends 'patients/base.html' %}
+{% block content %}
+<h2>Manage Doctors</h2>
+<table class="table">
+    <tr><th>Name</th><th>Specialty</th><th>Email</th><th>Phone</th></tr>
+    {% for d in doctors %}
+    <tr>
+        <td>{{ d }}</td>
+        <td>{{ d.specialty }}</td>
+        <td>{{ d.email }}</td>
+        <td>{{ d.phone }}</td>
+    </tr>
+    {% empty %}
+    <tr><td colspan="4">No doctors found.</td></tr>
+    {% endfor %}
+</table>
+{% endblock %}

@@ -1,0 +1,46 @@
+{% extends 'patients/base.html' %}
+
+{% block content %}
+<div class="page-header">
+    <h3>Consultation for {{ patient.first_name }} {{ patient.last_name }}</h3>
+    <a class="btn btn-secondary" href="{% url 'patients:appointment_list' %}">← Back to Appointments</a>
+</div>
+
+<div class="panel">
+    <form method="post">
+        {% csrf_token %}
+        <div class="form-grid">
+            <div class="form-field">
+                <label for="id_diagnosis">Diagnosis</label>
+                {{ form.diagnosis }}
+                {% if form.diagnosis.help_text %}<small>{{ form.diagnosis.help_text }}</small>{% endif %}
+            </div>
+            <div class="form-field">
+                <label for="id_prescriptions">Prescriptions</label>
+                {{ form.prescriptions }}
+                {% if form.prescriptions.help_text %}<small>{{ form.prescriptions.help_text }}</small>{% endif %}
+            </div>
+            <div class="form-field">
+                <label for="id_lab_requests">Lab Requests</label>
+                {{ form.lab_requests }}
+            </div>
+            <div class="form-field">
+                <label for="id_consultation_notes">Consultation Notes</label>
+                {{ form.consultation_notes }}
+            </div>
+            <div class="form-field">
+                <label for="id_next_appointment">Schedule Next Appointment</label>
+                {{ form.next_appointment }}
+            </div>
+            <div class="form-field">
+                <label for="id_next_doctor">Select Doctor</label>
+                {{ form.next_doctor }}
+            </div>
+        </div>
+        <div class="form-actions" style="margin-top:1rem;">
+            <button class="btn btn-primary" type="submit">Complete Consultation</button>
+            <a class="btn btn-secondary" href="{% url 'patients:appointment_list' %}">Cancel</a>
+        </div>
+    </form>
+</div>
+{% endblock %}

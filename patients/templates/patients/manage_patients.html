@@ -1,0 +1,17 @@
+{% extends 'patients/base.html' %}
+{% block content %}
+<h2>Manage Patients</h2>
+<table class="table">
+    <tr><th>Name</th><th>DOB</th><th>Phone</th><th>Actions</th></tr>
+    {% for p in patients %}
+    <tr>
+        <td><a href="{% url 'patients:patient_detail' p.pk %}">{{ p }}</a></td>
+        <td>{{ p.dob }}</td>
+        <td>{{ p.phone }}</td>
+        <td><a class="btn btn-sm" href="{% url 'patients:edit_patient' p.pk %}">Edit</a></td>
+    </tr>
+    {% empty %}
+    <tr><td colspan="4">No patients found.</td></tr>
+    {% endfor %}
+</table>
+{% endblock %}

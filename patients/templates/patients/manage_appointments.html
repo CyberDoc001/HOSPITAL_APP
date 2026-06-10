@@ -1,0 +1,23 @@
+{% extends 'patients/base.html' %}
+{% block content %}
+<h2>Manage Appointments</h2>
+<table class="table">
+    <tr><th>Date</th><th>Patient</th><th>Doctor</th><th>Status</th><th>Actions</th></tr>
+    {% for appt in appointments %}
+    <tr>
+        <td>{{ appt.scheduled_at|date:'M d, Y H:i' }}</td>
+        <td><a href="{% url 'patients:patient_detail' appt.patient.pk %}">{{ appt.patient }}</a></td>
+        <td>{{ appt.doctor }}</td>
+        <td>{{ appt.status }}</td>
+        <td>
+            <form method="post" action="{% url 'patients:approve_appointment' appt.pk %}">{% csrf_token %}
+                <button class="btn btn-sm" type="submit">Approve</button>
+            </form>
+            <a class="btn btn-sm" href="{% url 'patients:consultation' appt.pk %}">Consult</a>
+        </td>
+    </tr>
+    {% empty %}
+    <tr><td colspan="5">No appointments found.</td></tr>
+    {% endfor %}
+</table>
+{% endblock %}

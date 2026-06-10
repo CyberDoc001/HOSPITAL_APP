@@ -1,0 +1,11 @@
+{% extends 'patients/base.html' %}
+{% block content %}
+<h2>Notifications</h2>
+<ul>
+    {% for n in notifications %}
+        <li>{{ n.sent_at|date:'M d, Y H:i' }} - {{ n.message }} {% if not n.read %}<strong>(new)</strong>{% endif %}</li>
+    {% empty %}
+        <li>No notifications</li>
+    {% endfor %}
+</ul>
+{% endblock %}

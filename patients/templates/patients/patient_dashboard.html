@@ -1,0 +1,76 @@
+{% extends 'patients/base.html' %}
+
+{% block content %}
+<div class="page-header">
+    <h3>My Dashboard</h3>
+</div>
+<div class="panel-row">
+    <section class="panel">
+        <div class="panel-header">
+            <h3>Upcoming Appointments</h3>
+            <a class="btn btn-secondary" href="{% url 'patients:patient_appointments' %}">View All</a>
+        </div>
+        <ul class="list-group">
+            {% for appt in upcoming %}
+                <li>
+                    <strong>{{ appt.scheduled_at|date:'M d, Y H:i' }}</strong> — {{ appt.doctor }}
+                </li>
+            {% empty %}
+                <li>No upcoming appointments.</li>
+            {% endfor %}
+        </ul>
+    </section>
+
+    <section class="panel">
+        <div class="panel-header">
+            <h3>Prescriptions</h3>
+            <a class="btn btn-secondary" href="{% url 'patients:record_list' %}">View Records</a>
+        </div>
+        <ul class="list-group">
+            {% for p in prescriptions|slice:":5" %}
+                <li>
+                    <strong>{{ p.created_at|date:'M d, Y' }}</strong> — {{ p.description|truncatechars:120 }}
+                </li>
+            {% empty %}
+                <li>No prescriptions yet.</li>
+            {% endfor %}
+        </ul>
+    </section>
+</div>
+
+<div class="panel-row" style="margin-top:1rem;">
+    <section class="panel">
+        <div class="panel-header"><h3>Lab Results</h3></div>
+        <ul class="list-group">
+            {% for l in lab_reports|slice:":5" %}
+                <li>{{ l.created_at|date:'M d, Y' }} — {{ l.description|truncatechars:120 }}</li>
+            {% empty %}
+                <li>No lab results yet.</li>
+            {% endfor %}
+        </ul>
+    </section>
+
+    <section class="panel">
+        <div class="panel-header"><h3>Notifications</h3></div>
+        <ul class="list-group">
+            {% for n in notifications %}
+                <li>{{ n.sent_at|date:'M d, Y H:i' }} — {{ n.message }}</li>
+            {% empty %}
+                <li>No notifications.</li>
+            {% endfor %}
+        </ul>
+    </section>
+</div>
+
+<div class="panel" style="margin-top:1rem;">
+    <h3>Bills</h3>
+    <ul class="list-group">
+        {% for b in bills|slice:":5" %}
+            <li>{{ b.created_at|date:'M d, Y' }} — {{ b.amount }} — {% if b.paid %}Paid{% else %}Unpaid{% endif %}</li>
+        {% empty %}
+            <li>No bills.</li>
+        {% endfor %}
+    </ul>
+</div>
+
+{% endblock %}

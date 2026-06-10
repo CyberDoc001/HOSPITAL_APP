@@ -1,0 +1,33 @@
+{% extends 'patients/base.html' %}
+{% block content %}
+<h2>Doctor Portal - Today's Appointments</h2>
+<div class="doctors-overview">
+    <h3>NUAM CARE DOCTORS</h3>
+    <ul>
+        {% for d in doctors %}
+            <li>{{ d }}{% if d.specialty %} — {{ d.specialty }}{% endif %}</li>
+        {% empty %}
+            <li>No doctors registered.</li>
+        {% endfor %}
+    </ul>
+</div>
+<table class="table">
+    <tr><th>Time</th><th>Patient</th><th>Doctor</th><th>Status</th><th>Actions</th></tr>
+    {% for appt in appointments %}
+    <tr>
+        <td>{{ appt.scheduled_at|date:'H:i' }}</td>
+        <td><a href="{% url 'patients:patient_detail' appt.patient.pk %}">{{ appt.patient }}</a></td>
+        <td>{{ appt.doctor }}</td>
+        <td>{{ appt.status }}</td>
+        <td>
+            <a class="btn btn-secondary" href="{% url 'patients:consultation' appt.pk %}">Consult</a>
+        </td>
+    </tr>
+    {% empty %}
+    <tr><td colspan="5">No appointments for today.</td></tr>
+    {% endfor %}
+</table>
+<div style="margin-top: 1.5rem;">
+    <a class="btn btn-primary" href="{% url 'patients:doctor_patient_list' %}">View Assigned Patients</a>
+</div>
+{% endblock %}

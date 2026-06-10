@@ -1,0 +1,33 @@
+{% extends 'patients/base.html' %}
+
+{% block content %}
+<div class="page-header">
+    <h3>Appointments</h3>
+    <a class="btn btn-primary" href="{% url 'patients:new_appointment' %}">+ Schedule Appointment</a>
+</div>
+
+<table class="data-table">
+    <thead>
+        <tr>
+            <th>Patient</th>
+            <th>Doctor</th>
+            <th>Scheduled</th>
+            <th>Status</th>
+            <th>Reason</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for appointment in appointments %}
+            <tr>
+                <td>{{ appointment.patient }}</td>
+                <td>{{ appointment.doctor }}</td>
+                <td>{{ appointment.scheduled_at|date:'M d, Y H:i' }}</td>
+                <td><span style="display: inline-block; padding: 0.25rem 0.75rem; border-radius: 2rem; background: var(--primary-light); color: var(--primary); font-size: 0.85rem; font-weight: 600;">{{ appointment.get_status_display }}</span></td>
+                <td>{{ appointment.reason }}</td>
+            </tr>
+        {% empty %}
+            <tr><td colspan="5" style="text-align: center; padding: 2rem;">No appointments scheduled. <a href="{% url 'patients:new_appointment' %}">Create one</a></td></tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}

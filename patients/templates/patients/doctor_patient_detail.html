@@ -1,0 +1,60 @@
+{% extends 'patients/base.html' %}
+
+{% block content %}
+<div class="page-header">
+    <h3>Patient Record - {{ patient }}</h3>
+    <a class="btn btn-secondary" href="{% url 'patients:doctor_patient_list' %}">← Back to Assigned Patients</a>
+</div>
+<div class="detail-grid">
+    <div class="panel detail-panel">
+        <h4>Patient Profile</h4>
+        <dl style="display: grid; grid-template-columns: 120px 1fr; gap: 1rem;">
+            <dt>Name</dt><dd>{{ patient.first_name }} {{ patient.last_name }}</dd>
+            <dt>DOB</dt><dd>{{ patient.dob|date:'M d, Y' }}</dd>
+            <dt>Gender</dt><dd>{{ patient.get_gender_display }}</dd>
+            <dt>Email</dt><dd>{{ patient.email }}</dd>
+            <dt>Phone</dt><dd>{{ patient.phone }}</dd>
+            <dt>Address</dt><dd>{{ patient.address }}</dd>
+            <dt>Emergency</dt><dd>{{ patient.emergency_contact }}</dd>
+        </dl>
+    </div>
+    <div class="panel detail-panel">
+        <h4>Assigned Appointments</h4>
+        {% if upcoming %}
+        <ul class="list-group">
+            {% for apt in upcoming %}
+            <li>
+                <strong>{{ apt.scheduled_at|date:'M d, Y H:i' }}</strong> — {{ apt.reason|default:'Follow-up' }}
+                <div><a class="btn btn-secondary" href="{% url 'patients:consultation' apt.pk %}">Open Consultation</a></div>
+            </li>
+            {% endfor %}
+        </ul>
+        {% else %}
+        <p>No upcoming assigned appointments.</p>
+        {% endif %}
+    </div>
+</div>
+<div class="panel" style="margin-top:1.5rem;">
+    <h4>Medical Records</h4>
+    <table class="data-table">
+        <thead>
+            <tr>
+                <th>Type</th>
+                <th>Date</th>
+                <th>Description</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for record in records %}
+            <tr>
+                <td>{{ record.get_record_type_display }}</td>
+                <td>{{ record.created_at|date:'M d, Y H:i' }}</td>
+                <td>{{ record.description|linebreaksbr }}</td>
+            </tr>
+            {% empty %}
+            <tr><td colspan="3" style="text-align:center; padding:2rem;">No records yet.</td></tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

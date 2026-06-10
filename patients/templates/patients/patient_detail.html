@@ -1,0 +1,102 @@
+{% extends 'patients/base.html' %}
+
+{% block content %}
+<div class="page-header">
+    <h3>Patient Details</h3>
+    <a class="btn btn-secondary" href="{% url 'patients:patient_list' %}">← Back to Directory</a>
+</div>
+
+<div class="detail-grid">
+    <div class="panel detail-panel">
+        <h4>Profile Information</h4>
+        <dl style="display: grid; grid-template-columns: 120px 1fr; gap: 1rem;">
+            <dt style="font-weight: 600; color: var(--text-muted);">Name</dt>
+            <dd>{{ patient.first_name }} {{ patient.last_name }}</dd>
+            
+            <dt style="font-weight: 600; color: var(--text-muted);">Date of Birth</dt>
+            <dd>{{ patient.dob|date:'M d, Y' }}</dd>
+            
+            <dt style="font-weight: 600; color: var(--text-muted);">Gender</dt>
+            <dd>{{ patient.get_gender_display }}</dd>
+            
+            <dt style="font-weight: 600; color: var(--text-muted);">Email</dt>
+            <dd>{{ patient.email }}</dd>
+            
+            <dt style="font-weight: 600; color: var(--text-muted);">Phone</dt>
+            <dd>{{ patient.phone }}</dd>
+            
+            <dt style="font-weight: 600; color: var(--text-muted);">Address</dt>
+            <dd>{{ patient.address }}</dd>
+            
+            <dt style="font-weight: 600; color: var(--text-muted);">Emergency Contact</dt>
+            <dd>{{ patient.emergency_contact }}</dd>
+            
+            <dt style="font-weight: 600; color: var(--text-muted);">Primary Physician</dt>
+            <dd>{{ patient.primary_physician }}</dd>
+            
+            <dt style="font-weight: 600; color: var(--text-muted);">Status</dt>
+            <dd><span style="display: inline-block; padding: 0.25rem 0.75rem; border-radius: 2rem; background: {% if patient.active %}var(--secondary-light){% else %}var(--border-light){% endif %}; color: {% if patient.active %}var(--secondary){% else %}var(--text-muted){% endif %}; font-size: 0.85rem; font-weight: 600;">{{ patient.active|yesno:'Active,Inactive' }}</span></dd>
+        </dl>
+        <div style="margin-top: 1.5rem; display: flex; gap: 0.75rem; flex-wrap: wrap;">
+            <a class="btn btn-primary" href="{% url 'patients:edit_patient' patient.pk %}">Edit Patient Config</a>
+            <a class="btn btn-secondary" href="{% url 'patients:new_appointment' %}?patient={{ patient.pk }}">Schedule Follow-up</a>
+        </div>
+    </div>
+    
+    <div class="panel detail-panel">
+        <div class="panel-header">
+            <h4 style="margin: 0;">Medical Records</h4>
+        </div>
+        <ul class="list-group">
+            {% for record in patient.medical_records.all %}
+                <li>
+                    <div>
+                        <strong>{{ record.get_record_type_display }}</strong>
+                        <span style="font-size: 0.85rem; color: var(--text-light);">{{ record.created_at|date:'M d, Y' }}</span>
+                        <p style="margin: 0.5rem 0 0; color: var(--text-muted); font-size: 0.9rem;">{{ record.description|truncatechars:120 }}</p>
+                    </div>
+                </li>
+            {% empty %}
+                <li style="color: var(--text-light);">No medical records available.</li>
+            {% endfor %}
+        </ul>
+    </div>
+</div>
+
+<div class="panel" style="margin-top: 1.5rem;">
+    <div class="panel-header">
+        <h4>Patient Journey</h4>
+    </div>
+    <div class="journey-grid">
+        {% for step in journey_steps %}
+            <div class="journey-step{% if step.completed %} completed{% endif %}">
+                <span class="journey-icon">{% if step.completed %}✓{% else %}•{% endif %}</span>
+                <div>
+                    <strong>{{ step.label }}</strong>
+                    {% if step.completed %}
+                        <p style="margin: 0.35rem 0 0; color: var(--muted);">Completed</p>
+                    {% else %}
+                        <p style="margin: 0.35rem 0 0; color: var(--muted);">Pending</p>
+                    {% endif %}
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+</div>
+
+<div class="panel" style="margin-top: 1.5rem;">
+    <div class="panel-header">
+        <h4>Next Scheduled Appointment</h4>
+    </div>
+    {% if next_appointment %}
+        <div style="display: grid; gap: 0.75rem;">
+            <div><strong>Doctor:</strong> {{ next_appointment.doctor }}</div>
+            <div><strong>Date & Time:</strong> {{ next_appointment.scheduled_at|date:'M d, Y H:i' }}</div>
+            <div><strong>Status:</strong> {{ next_appointment.get_status_display }}</div>
+            <div><strong>Reason:</strong> {{ next_appointment.reason|default:'N/A' }}</div>
+        </div>
+    {% else %}
+        <p style="margin: 1rem 0 0; color: var(--text-muted);">No upcoming appointment is scheduled yet.</p>
+    {% endif %}
+</div>
+{% endblock %}

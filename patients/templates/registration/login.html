@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign In - NUAM CARE Hospital Management</title>
+    <link rel="stylesheet" href="/static/patients/css/auth-styles.css">
+</head>
+<body>
+    <div class="auth-page">
+        <!-- Navigation Header -->
+        <header class="auth-header">
+            <div class="auth-nav-container">
+                <div class="auth-logo-section">
+                    <svg class="hospital-logo" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+                        <rect x="20" y="15" width="60" height="70" fill="none" stroke="#0052CC" stroke-width="2" rx="3"/>
+                        <rect x="30" y="25" width="40" height="50" fill="none" stroke="#0052CC" stroke-width="2"/>
+                        <rect x="35" y="35" width="12" height="12" fill="#0052CC"/>
+                        <rect x="53" y="35" width="12" height="12" fill="#0052CC"/>
+                        <rect x="35" y="55" width="12" height="12" fill="#0052CC"/>
+                        <rect x="53" y="55" width="12" height="12" fill="#0052CC"/>
+                        <path d="M 45 70 L 50 80 L 55 70" fill="#0052CC"/>
+                    </svg>
+                    <h1 class="auth-brand">NUAM CARE</h1>
+                </div>
+                <nav class="auth-nav">
+                    <a href="{% url 'patients:landing' %}" class="nav-link-back">← Back to Home</a>
+                </nav>
+            </div>
+        </header>
+
+        <!-- Main Auth Container -->
+        <div class="auth-container">
+            <div class="auth-card">
+                <div class="auth-card-header">
+                    <h2>Sign In to Your Account</h2>
+                    <p>Access your hospital management system</p>
+                </div>
+
+                <form method="post" class="auth-form" novalidate>
+                    {% csrf_token %}
+                    
+                    <div class="form-group">
+                        <label for="{{ form.username.id_for_label }}" class="form-label">Username</label>
+                        {{ form.username }}
+                        {% if form.username.errors %}
+                            <span class="form-error">{{ form.username.errors.0 }}</span>
+                        {% endif %}
+                    </div>
+
+                    <div class="form-group">
+                        <label for="{{ form.password.id_for_label }}" class="form-label">Password</label>
+                        {{ form.password }}
+                        {% if form.password.errors %}
+                            <span class="form-error">{{ form.password.errors.0 }}</span>
+                        {% endif %}
+                    </div>
+
+                    <button type="submit" class="btn-submit">Sign In</button>
+                </form>
+
+                <div class="auth-footer">
+                    <p>Don't have an account? <a href="{% url 'patients:register' %}" class="auth-link">Create one here</a></p>
+                    <p>Doctor? <a href="{% url 'patients:doctor_login' %}" class="auth-link">Sign in with surname and email</a></p>
+                </div>
+            </div>
+
+            <div class="auth-info">
+                <div class="info-box">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+                    </svg>
+                    <h3>Secure Login</h3>
+                    <p>Your credentials are encrypted and protected with industry-standard security.</p>
+                </div>
+                <div class="info-box">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <circle cx="12" cy="12" r="10"/>
+                        <path d="M12 6v6l4 2"/>
+                    </svg>
+                    <h3>24/7 Access</h3>
+                    <p>Access your hospital management system anytime, anywhere with our reliable platform.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <footer class="auth-footer-main">
+            <p>&copy; 2026 NUAM CARE. Professional Hospital Management System.</p>
+        </footer>
+    </div>
+</body>
+</html>
+

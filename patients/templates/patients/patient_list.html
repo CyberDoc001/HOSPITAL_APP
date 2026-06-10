@@ -1,0 +1,42 @@
+{% extends 'patients/base.html' %}
+
+{% block content %}
+<div class="page-header">
+    <h3>Patient Directory</h3>
+    {% if user.is_staff %}
+    <a class="btn btn-primary" href="{% url 'patients:new_patient' %}">+ Add Patient</a>
+    {% endif %}
+</div>
+
+<table class="data-table">
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Email</th>
+            <th>Phone</th>
+            <th>Doctor</th>
+            <th>Status</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for patient in patients %}
+            <tr>
+                <td>
+                    {% if user.is_staff or user.doctor_profile %}
+                        <a href="{% url 'patients:patient_detail' patient.pk %}">{{ patient.first_name }} {{ patient.last_name }}</a>
+                    {% else %}
+                        {{ patient.first_name }} {{ patient.last_name }}
+                    {% endif %}
+                </td>
+                <td>{{ patient.email }}</td>
+                <td>{{ patient.phone }}</td>
+                <td>{{ patient.primary_physician }}</td>
+                <td><span style="display: inline-block; padding: 0.25rem 0.75rem; border-radius: 2rem; background: {% if patient.active %}var(--secondary-light){% else %}var(--border-light){% endif %}; color: {% if patient.active %}var(--secondary){% else %}var(--text-muted){% endif %}; font-size: 0.85rem; font-weight: 600;">{{ patient.active|yesno:'Active,Inactive' }}</span></td>
+            </tr>
+        {% empty %}
+            <tr><td colspan="5" style="text-align: center; padding: 2rem;">No patients found. <a href="{% url 'patients:new_patient' %}">Create one</a></td></tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}
+

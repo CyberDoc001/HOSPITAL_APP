@@ -1,0 +1,17 @@
+{% extends 'patients/base.html' %}
+{% block content %}
+<h2>My Portal</h2>
+<div class="card">
+    <h3>Welcome, {{ patient.first_name }} {{ patient.last_name }}</h3>
+    <p><strong>Next appointment:</strong> {% if next_appointment %}{{ next_appointment.scheduled_at|date:'M d, Y H:i' }} with {{ next_appointment.doctor }}{% else %}None scheduled{% endif %}</p>
+    <h4>Notifications</h4>
+    <ul>
+        {% for n in notifications %}
+            <li>{{ n.sent_at|date:'M d, Y H:i' }} - {{ n.message }}</li>
+        {% empty %}
+            <li>No notifications</li>
+        {% endfor %}
+    </ul>
+    <p><a class="btn btn-primary" href="{% url 'patients:patient_detail' patient.pk %}">View Profile</a></p>
+</div>
+{% endblock %}

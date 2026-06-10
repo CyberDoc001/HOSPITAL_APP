@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NUAM CARE - Professional Hospital Management System</title>
+    <link rel="stylesheet" href="/static/patients/css/landing-styles.css">
+</head>
+<body>
+    <div class="landing-page">
+        <!-- Navigation Header -->
+        <header class="landing-header">
+            <div class="landing-nav-container">
+                <div class="landing-logo-section">
+                    <svg class="hospital-logo" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+                        <rect x="20" y="15" width="60" height="70" fill="none" stroke="#0052CC" stroke-width="2" rx="3"/>
+                        <rect x="30" y="25" width="40" height="50" fill="none" stroke="#0052CC" stroke-width="2"/>
+                        <rect x="35" y="35" width="12" height="12" fill="#0052CC"/>
+                        <rect x="53" y="35" width="12" height="12" fill="#0052CC"/>
+                        <rect x="35" y="55" width="12" height="12" fill="#0052CC"/>
+                        <rect x="53" y="55" width="12" height="12" fill="#0052CC"/>
+                        <path d="M 45 70 L 50 80 L 55 70" fill="#0052CC"/>
+                    </svg>
+                    <h1 class="landing-brand">NUAM CARE</h1>
+                </div>
+                <nav class="landing-nav">
+                    <a href="{% url 'login' %}" class="nav-link-signin">Sign In</a>
+                </nav>
+            </div>
+        </header>
+
+        <!-- Hero Section -->
+        <section class="landing-hero">
+            <div class="hero-content">
+                <div class="hero-badge">Professional Healthcare Management</div>
+                <h2 class="hero-main-title">Transform Your Hospital Operations</h2>
+                <p class="hero-description">
+                    Streamline patient management, appointments, medical records, and care coordination with a 
+                    secure, intuitive hospital management system built for healthcare excellence.
+                </p>
+                <div class="hero-cta-buttons">
+                    <a href="{% url 'patients:register' %}" class="btn-primary-large">New Patient? Register</a>
+                    <a href="{% url 'login' %}" class="btn-secondary-large">Existing Patient Sign In</a>
+                    <a href="{% url 'patients:doctor_login' %}" class="btn-secondary-large">Doctor Login</a>
+                </div>
+                <p class="hero-subtext">Only authenticated patients can access their medical records. Existing patients should sign in; new patients should register first.</p>
+            </div>
+            <div class="hero-visual">
+                <svg class="hero-illustration" viewBox="0 0 300 300" xmlns="http://www.w3.org/2000/svg">
+                    <rect width="300" height="300" fill="#f0f7ff"/>
+                    <circle cx="150" cy="80" r="40" fill="#0052CC"/>
+                    <rect x="100" y="140" width="100" height="80" fill="#0052CC" opacity="0.1" rx="5"/>
+                    <rect x="110" y="150" width="30" height="50" fill="#0052CC" opacity="0.3" rx="3"/>
+                    <rect x="160" y="150" width="30" height="50" fill="#0052CC" opacity="0.3" rx="3"/>
+                    <line x1="80" y1="200" x2="220" y2="200" stroke="#0052CC" stroke-width="2" opacity="0.5"/>
+                    <circle cx="80" cy="200" r="4" fill="#0052CC"/>
+                    <circle cx="150" cy="200" r="4" fill="#0052CC"/>
+                    <circle cx="220" cy="200" r="4" fill="#0052CC"/>
+                </svg>
+            </div>
+        </section>
+
+        <!-- Features Section -->
+        <section class="landing-features">
+            <div class="features-header">
+                <h2>Why Choose NUAM CARE?</h2>
+                <p>Comprehensive solutions for modern healthcare management</p>
+            </div>
+            <div class="features-grid">
+                <div class="feature-item">
+                    <div class="feature-icon-box">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2M12 3a4 4 0 1 0 0 8 4 4 0 0 0 0-8z"/>
+                        </svg>
+                    </div>
+                    <h3>Patient Management</h3>
+                    <p>Comprehensive patient profiles, medical histories, and emergency contact management in one secure location.</p>
+                </div>
+                <div class="feature-item">
+                    <div class="feature-icon-box">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <rect x="3" y="4" width="18" height="18" rx="2"/>
+                            <path d="M16 2v4M8 2v4M3 10h18"/>
+                        </svg>
+                    </div>
+                    <h3>Smart Scheduling</h3>
+                    <p>Intuitive appointment booking, availability management, and real-time synchronization.</p>
+                </div>
+                <div class="feature-item">
+                    <div class="feature-icon-box">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+                            <path d="M14 2v6h6"/>
+                        </svg>
+                    </div>
+                    <h3>Medical Records</h3>
+                    <p>Centralized repository for consultations, lab reports, prescriptions, and discharge summaries.</p>
+                </div>
+                <div class="feature-item">
+                    <div class="feature-icon-box">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+                        </svg>
+                    </div>
+                    <h3>Secure Access</h3>
+                    <p>Role-based access control with industry-standard encryption protecting all patient data.</p>
+                </div>
+                <div class="feature-item">
+                    <div class="feature-icon-box">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M13 10V3L4 14h7v7l9-11h-7z"/>
+                        </svg>
+                    </div>
+                    <h3>Fast & Reliable</h3>
+                    <p>Built on modern technology for maximum uptime, speed, and performance.</p>
+                </div>
+                <div class="feature-item">
+                    <div class="feature-icon-box">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
+                        </svg>
+                    </div>
+                    <h3>Intuitive Design</h3>
+                    <p>Clean, professional interface designed by healthcare professionals for healthcare professionals.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Stats Section -->
+        <section class="landing-stats">
+            <div class="stat-item">
+                <div class="stat-number">10K+</div>
+                <div class="stat-label">Healthcare Professionals</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-number">500+</div>
+                <div class="stat-label">Facilities Worldwide</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-number">99.9%</div>
+                <div class="stat-label">System Uptime</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-number">24/7</div>
+                <div class="stat-label">Support Available</div>
+            </div>
+        </section>
+
+        <!-- Footer -->
+        <footer class="landing-footer">
+            <p>&copy; 2026 NUAM CARE. All rights reserved. | Professional Hospital Management System</p>
+        </footer>
+    </div>
+</body>
+</html>
+

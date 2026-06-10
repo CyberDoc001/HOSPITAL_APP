@@ -1,0 +1,71 @@
+{% extends 'patients/base.html' %}
+
+{% block content %}
+<div class="dashboard-grid">
+    <article class="metric-card">
+        <h3>Total Patients</h3>
+        <p class="metric-value">{{ patient_count }}</p>
+    </article>
+    <article class="metric-card">
+        <h3>Appointments</h3>
+        <p class="metric-value">{{ appointment_count }}</p>
+    </article>
+    <article class="metric-card">
+        <h3>Doctors</h3>
+        <p class="metric-value">{{ doctor_count }}</p>
+    </article>
+</div>
+{% if user_patient %}
+<div class="panel-row">
+    <section class="panel">
+        <div class="panel-header">
+            <h3>Your Patient Profile</h3>
+            <a class="btn btn-secondary" href="{% url 'patients:patient_detail' user_patient.pk %}">View Profile</a>
+        </div>
+        <p><strong>{{ user_patient.first_name }} {{ user_patient.last_name }}</strong> • {{ user_patient.get_gender_display }} • {{ user_patient.phone }}</p>
+        <p style="margin-top: 0.75rem; color: var(--muted);">Next appointment: {% if user_patient_next %}{{ user_patient_next.scheduled_at|date:'M d, Y H:i' }} with {{ user_patient_next.doctor }}{% else %}None scheduled{% endif %}</p>
+    </section>
+</div>
+{% endif %}
+
+<div class="panel-row">
+    <section class="panel">
+        <div class="panel-header">
+            <h3>Latest Patients</h3>
+            <a class="btn btn-secondary" href="{% url 'patients:patient_list' %}">View All</a>
+        </div>
+        <ul class="list-group">
+            {% for patient in latest_patients %}
+                <li>
+                    <div>
+                        <a href="{% url 'patients:patient_detail' patient.pk %}">{{ patient.first_name }} {{ patient.last_name }}</a>
+                        <span style="font-size: 0.85rem; color: var(--text-light);">{{ patient.primary_physician }}</span>
+                    </div>
+                </li>
+            {% empty %}
+                <li>No patients available yet.</li>
+            {% endfor %}
+        </ul>
+    </section>
+
+    <section class="panel">
+        <div class="panel-header">
+            <h3>Upcoming Appointments</h3>
+            <a class="btn btn-secondary" href="{% url 'patients:appointment_list' %}">View All</a>
+        </div>
+        <ul class="list-group">
+            {% for appointment in upcoming_appointments %}
+                <li>
+                    <div>
+                        <strong>{{ appointment.patient }}</strong>
+                        <span style="font-size: 0.85rem; color: var(--text-light);">{{ appointment.scheduled_at|date:'M d, Y H:i' }}</span>
+                    </div>
+                </li>
+            {% empty %}
+                <li>No scheduled appointments.</li>
+            {% endfor %}
+        </ul>
+    </section>
+</div>
+{% endblock %}
+
